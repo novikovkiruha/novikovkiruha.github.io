@@ -34,7 +34,6 @@ let dateParameters = [];
                     let settingsValues = Object.values(settings);
            
                     for (var i = 0; i < settingsKeys.length; i++) {
-                        alert("Settings");
                         updateParameter(settingsKeys[i], settingsValues[i]);
                         document.getElementById(settingsKeys[i]).value = settingsValues[i];
                     }
@@ -46,7 +45,6 @@ let dateParameters = [];
     // Event function that change of parameter value
     // function onParameterChange(parameterChangeEvent) {
     //     parameterChangeEvent.getParameterAsync().then(function(parameter) {
-    //         alert("Event");
     //         document.getElementById(`${parameter.id}`).innerText = parameter.currentValue.formattedValue;
     //     });
     // }
@@ -100,7 +98,6 @@ let dateParameters = [];
                 }
             }
 
-            alert("Apply button");
             tableau.extensions.settings.saveAsync();
         });
     });
