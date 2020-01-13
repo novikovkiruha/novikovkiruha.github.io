@@ -1,5 +1,5 @@
 let settings;
-let parameterObjects = [];
+let dateParameters = [];
 
 // Extension initialization
 (function() {
@@ -10,12 +10,12 @@ let parameterObjects = [];
         // This function is called when the extension is initialized
         tableau.extensions.initializeDialogAsync().then(function(openPayload) {
             tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function(parameters) {
-                parameters.forEach(function(p) {
-                    p.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
-                    parameterRow(p).appendTo(tableBody);
+                parameters.forEach(function(parameter) {
+                    parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
+                    parameterRow(parameter).appendTo(tableBody);
 
-                    if (p.dataType === "date" || p.dataType === "date-time") {
-                        parameterObjects.push(p.name);
+                    if (parameter.dataType === "date" || parameter.dataType === "date-time") {
+                        dateParameters.push(parameter.name);
                     }
                 });
                 
@@ -34,6 +34,7 @@ let parameterObjects = [];
                     let settingsValues = Object.values(settings);
            
                     for (var i = 0; i < settingsKeys.length; i++) {
+                        alert("Settings");
                         updateParameter(settingsKeys[i], settingsValues[i]);
                         document.getElementById(settingsKeys[i]).value = settingsValues[i];
                     }
@@ -45,6 +46,7 @@ let parameterObjects = [];
     // Event function that change of parameter value
     function onParameterChange(parameterChangeEvent) {
         parameterChangeEvent.getParameterAsync().then(function(parameter) {
+            alert("Event");
             document.getElementById(`${parameter.id}`).innerText = parameter.currentValue.formattedValue;
         });
     }
@@ -90,12 +92,15 @@ let parameterObjects = [];
 // This function is called when the Apply Auto-refresh button is clicked
 (function() {
     $(document).ready(function() {
-        $("#autoRefreshButton").click(function() {
-            for (var i = 0; i < parameterObjects.length; i++) {
-                var inputDate = document.getElementById(parameterObjects[i]).value;
-                updateParameter(parameterObjects[i], inputDate);
+        $("#autoRefreshButton").click(function() {            
+            for (var i = 0; i < dateParameters.length; i++) {
+                var inputDate = document.getElementById(dateParameters[i]).value;
+                if (inputDate !== "") {
+                    updateParameter(dateParameters[i], inputDate);
+                }
             }
-            
+
+            alert("Apply button");
             tableau.extensions.settings.saveAsync();
         });
     });
@@ -104,11 +109,17 @@ let parameterObjects = [];
 // Function that update the current value of the parameter according to moment.js library expression.
 // It is called during extension initialization and after the clicking the Apply Auto-udpate button
 function updateParameter(parameterName, parameterValue) {
-    tableau.extensions.initializeAsync().then(function() {
-        tableau.extensions.dashboardContent.dashboard.findParameterAsync(parameterName).then(function(parameter) {
-            parameter.changeValueAsync(eval(`moment${parameterValue}`).format('YYYY-MM-DD'));
+    try {
+        tableau.extensions.initializeAsync().then(function() {
+            tableau.extensions.dashboardContent.dashboard.findParameterAsync(parameterName).then(function(parameter) {
+                parameter.changeValueAsync(eval(`moment${parameterValue}`).format('YYYY-MM-DD'));
+            });
         });
-    });
-    
-    tableau.extensions.settings.set(parameterName, parameterValue);
+        
+        if (parameterValue !== "") {
+            tableau.extensions.settings.set(parameterName, parameterValue);
+        }
+    } catch (e) {
+        alert(e);
+    }
 };
