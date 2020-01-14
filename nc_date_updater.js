@@ -10,7 +10,7 @@ let dateParameters = [];
         // This function is called when the extension is initialized
         tableau.extensions.initializeDialogAsync().then(function(openPayload) {
             tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function(parameters) {
-                parameters.forEach(function(parameter) {
+                sort(parameters).forEach(function(parameter) {
                     // parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
                     parameterRow(parameter).appendTo(tableBody);
 
@@ -58,12 +58,12 @@ let dateParameters = [];
     }
 
     // Current Value column filling
-    function valueCell(value, id) {
-        const cellElement = $(`<td id="${id}">`);
-        cellElement.text(value);
+    // function valueCell(value, id) {
+    //     const cellElement = $(`<td id="${id}">`);
+    //     cellElement.text(value);
             
-        return cellElement;
-    }
+    //     return cellElement;
+    // }
     
     // Custom Value column filling
     function inputCell(id) {
