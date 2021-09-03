@@ -11,7 +11,7 @@ let dateParameters = [];
         tableau.extensions.initializeDialogAsync().then(function(openPayload) {
             tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function(parameters) {
                 parameters.forEach(function(parameter) {
-                    // parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
+                    parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
                     parameterRow(parameter).appendTo(tableBody);
 
                     if (parameter.dataType === "date" || parameter.dataType === "date-time") {
@@ -43,11 +43,20 @@ let dateParameters = [];
     });
 
     // Event function that change of parameter value
+<<<<<<< HEAD
     // function onParameterChange(parameterChangeEvent) {
     //     parameterChangeEvent.getParameterAsync().then(function(parameter) {
     //         document.getElementById(`${parameter.id}`).innerText = parameter.currentValue.formattedValue;
     //     });
     // }
+=======
+    function onParameterChange(parameterChangeEvent) {
+        parameterChangeEvent.getParameterAsync().then(function(parameter) {
+            alert("Event");
+            document.getElementById(`${parameter.id}`).innerText = parameter.currentValue.formattedValue;
+        });
+    }
+>>>>>>> parent of 41a2cbd (columns deleting)
     
     // Name and Data Type columns filling
     function textCell(value) {
@@ -78,8 +87,8 @@ let dateParameters = [];
         
         if (parameter.dataType === "date" || parameter.dataType === "date-time") {
             row.append(textCell(parameter.name));
-            // row.append(textCell(parameter.dataType));
-            // row.append(valueCell(parameter.currentValue.formattedValue, parameter.id));
+            row.append(textCell(parameter.dataType));
+            row.append(valueCell(parameter.currentValue.formattedValue, parameter.id));
             row.append(inputCell(parameter.name));
         }
 
