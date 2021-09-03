@@ -12,10 +12,14 @@ let dateParameters = [];
             tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function(parameters) {
                 parameters.forEach(function(parameter) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
 =======
                     // parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
 >>>>>>> parent of 55761d3 (work changes)
+=======
+                    parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
+>>>>>>> parent of 41a2cbd (columns deleting)
                     parameterRow(parameter).appendTo(tableBody);
 
                     if (parameter.dataType === "date" || parameter.dataType === "date-time") {
@@ -49,6 +53,7 @@ let dateParameters = [];
 
     // Event function that change of parameter value
 <<<<<<< HEAD
+<<<<<<< HEAD
     // function onParameterChange(parameterChangeEvent) {
     //     parameterChangeEvent.getParameterAsync().then(function(parameter) {
     //         alert("Event");
@@ -56,12 +61,17 @@ let dateParameters = [];
     //     });
     // }
 =======
+=======
+>>>>>>> parent of 41a2cbd (columns deleting)
     function onParameterChange(parameterChangeEvent) {
         parameterChangeEvent.getParameterAsync().then(function(parameter) {
             alert("Event");
             document.getElementById(`${parameter.id}`).innerText = parameter.currentValue.formattedValue;
         });
     }
+<<<<<<< HEAD
+>>>>>>> parent of 41a2cbd (columns deleting)
+=======
 >>>>>>> parent of 41a2cbd (columns deleting)
     
     // Name and Data Type columns filling
