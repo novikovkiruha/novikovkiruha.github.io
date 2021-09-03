@@ -11,7 +11,11 @@ let dateParameters = [];
         tableau.extensions.initializeDialogAsync().then(function(openPayload) {
             tableau.extensions.dashboardContent.dashboard.getParametersAsync().then(function(parameters) {
                 parameters.forEach(function(parameter) {
+<<<<<<< HEAD
                     parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
+=======
+                    // parameter.addEventListener(tableau.TableauEventType.ParameterChanged, onParameterChange);
+>>>>>>> parent of 55761d3 (work changes)
                     parameterRow(parameter).appendTo(tableBody);
 
                     if (parameter.dataType === "date" || parameter.dataType === "date-time") {
